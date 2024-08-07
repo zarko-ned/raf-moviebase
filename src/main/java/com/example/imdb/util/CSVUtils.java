@@ -43,7 +43,7 @@ public class CSVUtils {
     }
 
     // Metod za dodavanje filma u CSV
-    public static void addMovieToCSV(String filePath, Movie movie) throws IOException {
+    public static boolean addMovieToCSV(String filePath, Movie movie) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true));
              CSVWriter csvWriter = new CSVWriter(writer)) {
 
@@ -57,6 +57,11 @@ public class CSVUtils {
             };
 
             csvWriter.writeNext(movieData);
+            return true; // Ako sve ide kako treba, vraćamo true
+        } catch (IOException e) {
+            e.printStackTrace(); // Štampamo stek trag greške
+            return false; // Ako dođe do greške, vraćamo false
         }
     }
+
 }
