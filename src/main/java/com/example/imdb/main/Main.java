@@ -8,10 +8,11 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        String imdbId = "tt14539740";  // Primer IMDb ID
+        String imdbId = "bla";  // Primer IMDb ID
         IMDbAPIClient client = new IMDbAPIClient();
         try {
             Movie movie = client.fetchMovieData(imdbId);
+
             if (movie != null) {
                 System.out.println(movie);
             } else {

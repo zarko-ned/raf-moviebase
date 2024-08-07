@@ -22,17 +22,24 @@ public class IMDbAPIClient {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 200) {
-            Movie movie = parseMovieData(response.body());
-            if (movie == null) {
-                throw new MovieNotFoundException("Movie not found for IMDb ID: " + imdbId);
-            }
-            return movie;
+            return parseMovieData(response.body(), imdbId);
         } else {
             throw new IOException("Failed to retrieve data from OMDb API");
         }
     }
-    private Movie parseMovieData(String responseBody) {
+
+    private Movie parseMovieData(String responseBody, String imdbId) throws MovieNotFoundException {
         JSONObject jsonObject = new JSONObject(responseBody);
+
+        if (jsonObject.optString("Response").equals("False")) {
+            String errorMessage = jsonObject.optString("Error");
+            if ("Incorrect IMDb ID.".equals(errorMessage)) {
+                throw new MovieNotFoundException("Incorrect IMDb ID: " + imdbId);
+            } else {
+                throw new MovieNotFoundException("Movie not found: " + errorMessage);
+            }
+        }
+
         return new Movie(
                 jsonObject.optString("Title"),
                 jsonObject.optString("Year"),
