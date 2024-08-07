@@ -9,6 +9,7 @@ import java.net.http.HttpResponse;
 import com.example.imdb.config.Config;
 import com.example.imdb.exception.MovieNotFoundException;
 import com.example.imdb.model.Movie;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class IMDbAPIClient {
@@ -29,24 +30,34 @@ public class IMDbAPIClient {
     }
 
     private Movie parseMovieData(String responseBody, String imdbId) throws MovieNotFoundException {
-        JSONObject jsonObject = new JSONObject(responseBody);
+        try {
+            JSONObject jsonObject = new JSONObject(responseBody);
 
-        if (jsonObject.optString("Response").equals("False")) {
-            String errorMessage = jsonObject.optString("Error");
-            if ("Incorrect IMDb ID.".equals(errorMessage)) {
-                throw new MovieNotFoundException("Incorrect IMDb ID: " + imdbId);
-            } else {
-                throw new MovieNotFoundException("Movie not found: " + errorMessage);
+            // Check if the response indicates an error
+            if (jsonObject.optString("Response").equals("False")) {
+                String errorMessage = jsonObject.optString("Error");
+
+                // Extend the error handling to cover additional cases
+                if (errorMessage.contains("Incorrect IMDb ID")) {
+                    throw new MovieNotFoundException("Incorrect IMDb ID: " + imdbId);
+                } else if (errorMessage.contains("Conversion from string")) {
+                    // Handle specific error message from API response
+                    throw new MovieNotFoundException("Invalid IMDb ID format: " + imdbId);
+                } else {
+                    throw new MovieNotFoundException("Movie not found: " + errorMessage);
+                }
             }
-        }
 
-        return new Movie(
-                imdbId,
-                jsonObject.optString("Title"),
-                jsonObject.optString("Year"),
-                jsonObject.optString("Director"),
-                jsonObject.optString("Actors"),
-                jsonObject.optString("Plot")
-        );
+            return new Movie(
+                    imdbId,
+                    jsonObject.optString("Title"),
+                    jsonObject.optString("Year"),
+                    jsonObject.optString("Director"),
+                    jsonObject.optString("Actors"),
+                    jsonObject.optString("Plot")
+            );
+        } catch (JSONException e) {
+            throw new MovieNotFoundException("Error parsing movie data: " + e.getMessage());
+        }
     }
 }

@@ -10,6 +10,30 @@ import com.opencsv.exceptions.CsvException;
 import java.io.IOException;
 import java.util.Scanner;
 
+/*
+ * ZADATAK:
+ *
+ * Implementirati funkcionalnost za prikaz podataka o filmu na osnovu unetog IMDb ID.
+ * Potrebno je prikazati sledeće informacije:
+ *
+ * 1. Naziv filma
+ * 2. Godinu izlaska filma
+ * 3. Režisera filma
+ * 4. Glumce u filmu
+ * 5. Opis filma
+ *
+ * Postupak je sledeći:
+ *
+ * 1. **Provera u CSV datoteci:** Prvo, proveriti da li film sa unetim IMDb ID-om postoji u datoteci `movies.csv`.
+ *    Ako film postoji, pročitajte i prikažite njegove podatke iz ove datoteke.
+ *
+ * 2. **Dohvatanje sa API-ja:** Ako film sa unetim IMDb ID-om nije pronađen u `movies.csv`, preuzmite podatke o filmu preko API-ja.
+ *
+ * 3. **Ažuriranje CSV datoteke:** Nakon što dobijete podatke putem API-ja, sačuvajte ih u `movies.csv` datoteku za buduće potrebe.
+ *
+ *  Unos IMDb ID-a se vrši preko tastature.
+ */
+
 public class Main {
     public static void main(String[] args) {
 

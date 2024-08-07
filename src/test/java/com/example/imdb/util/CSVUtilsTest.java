@@ -53,8 +53,7 @@ public class CSVUtilsTest {
     @ParameterizedTest
     @MethodSource("provideMoviesForAdding")
     void testAddMovieToCSV(Movie movie) throws IOException, CsvException {
-        System.out.println(movie);
-        System.out.println("-------------");
+
         // Kreiramo privremeni CSV fajl
         File tempFile = File.createTempFile("test-movies", ".csv");
         tempFile.deleteOnExit();
