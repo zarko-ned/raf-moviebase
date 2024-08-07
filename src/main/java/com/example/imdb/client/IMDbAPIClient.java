@@ -41,6 +41,7 @@ public class IMDbAPIClient {
         }
 
         return new Movie(
+                imdbId,
                 jsonObject.optString("Title"),
                 jsonObject.optString("Year"),
                 jsonObject.optString("Director"),
