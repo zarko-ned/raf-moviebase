@@ -1,9 +1,12 @@
 package com.example.imdb;
 
+import com.example.imdb.config.Config;
 import com.example.imdb.model.Movie;
 import com.example.imdb.utils.CSVUtils;
 import com.opencsv.exceptions.CsvException;
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -72,5 +76,21 @@ public class CSVUtilsTest {
                 new Movie("tt0000001", "Test Movie 1", "2024", "Director 1", "Actor 1, Actor 2", "Test plot 1."),
                 new Movie("tt0000002", "Test Movie 2", "2023", "Director 2", "Actor 3, Actor 4", "Test plot 2.")
         );
+    }
+
+    @TestFactory
+    Stream<DynamicTest> testGetTheNewestMovies() throws IOException {
+        List<Movie> movies = CSVUtils.getTheNewestMovies(Config.CSV_FILE_PATH);
+
+        return Stream.of(movies).flatMap(List::stream)
+                .map(movie -> DynamicTest.dynamicTest("Test movie: " + movie.getTitle(),
+                        () -> {
+                            assertNotNull(movie.getImdbId(), "IMDB ID should not be null");
+                            assertNotNull(movie.getTitle(), "Title should not be null");
+                            assertNotNull(movie.getYear(), "Year should not be null");
+                            assertNotNull(movie.getDirector(), "Director should not be null");
+                            assertNotNull(movie.getActors(), "Actors should not be null");
+                            assertNotNull(movie.getPlot(), "Plot should not be null");
+                        }));
     }
 }

@@ -32,6 +32,8 @@ import java.util.Scanner;
  *
  * 3. **Ažuriranje CSV datoteke:** Nakon što dobijete podatke putem API-ja, sačuvajte ih u `movies.csv` datoteku za buduće potrebe.
  *
+ * 4. **Prikaz najnovijih filmova:** Na kraju prikazati najnovije filmove iz datoteke `movies.csv` tako što se prikažu poslednja 3 filmva iz ove datoteke.
+ *
  *  Unos IMDb ID-a se vrši preko tastature.
  */
 

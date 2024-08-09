@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class IMDbAPIClientDynamicTest {
+public class IMDbAPIClientTest {
 
     private final IMDbAPIClient client = new IMDbAPIClient();
 
