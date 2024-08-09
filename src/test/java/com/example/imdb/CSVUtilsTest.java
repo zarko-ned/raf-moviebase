@@ -1,6 +1,7 @@
-package com.example.imdb.util;
+package com.example.imdb;
 
 import com.example.imdb.model.Movie;
+import com.example.imdb.utils.CSVUtils;
 import com.opencsv.exceptions.CsvException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

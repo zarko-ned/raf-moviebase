@@ -37,15 +37,8 @@ public class IMDbAPIClient {
             if (jsonObject.optString("Response").equals("False")) {
                 String errorMessage = jsonObject.optString("Error");
 
-                // Extend the error handling to cover additional cases
-                if (errorMessage.contains("Incorrect IMDb ID")) {
-                    throw new MovieNotFoundException("Incorrect IMDb ID: " + imdbId);
-                } else if (errorMessage.contains("Conversion from string")) {
-                    // Handle specific error message from API response
-                    throw new MovieNotFoundException("Invalid IMDb ID format: " + imdbId);
-                } else {
                     throw new MovieNotFoundException("Movie not found: " + errorMessage);
-                }
+
             }
 
             return new Movie(
@@ -59,5 +52,6 @@ public class IMDbAPIClient {
         } catch (JSONException e) {
             throw new MovieNotFoundException("Error parsing movie data: " + e.getMessage());
         }
+
     }
 }

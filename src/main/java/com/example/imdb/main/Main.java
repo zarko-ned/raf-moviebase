@@ -4,10 +4,11 @@ import com.example.imdb.client.IMDbAPIClient;
 import com.example.imdb.config.Config;
 import com.example.imdb.exception.MovieNotFoundException;
 import com.example.imdb.model.Movie;
-import com.example.imdb.util.CSVUtils;
+import com.example.imdb.utils.CSVUtils;
 import com.opencsv.exceptions.CsvException;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -67,13 +68,30 @@ public class Main {
                     System.out.println("Movie not found on IMDb.");
                 }
             }
+
+            System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
+            System.out.println("The newest movies:");
+
+            List<Movie> newestMovies = CSVUtils.getTheNewestMovies(Config.CSV_FILE_PATH);
+
+            for (Movie m : newestMovies) {
+                System.out.println("-------------------------");
+                System.out.println("Title: " + m.getTitle());
+                System.out.println("Year: " + m.getYear());
+                System.out.println("Director: " + m.getDirector());
+                System.out.println("Actors: " + m.getActors());
+                System.out.println("Plot: " + m.getPlot());
+            }
+
+            System.out.println("-------------------------");
+
         } catch (IOException | InterruptedException e) {
             System.err.println("An error occurred while processing the request.");
             e.printStackTrace();
         } catch (CsvException e) {
             System.err.println("An error occurred while handling the CSV file.");
             e.printStackTrace();
-        } catch (MovieNotFoundException e) {
+        }  catch (MovieNotFoundException e) {
             System.err.println("Movie not found: " + e.getMessage());
         } finally {
             scanner.close();  // Zatvaranje scanner-a u finally bloku

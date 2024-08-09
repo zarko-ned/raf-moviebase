@@ -1,4 +1,4 @@
-package com.example.imdb.util;
+package com.example.imdb.utils;
 
 
 import com.example.imdb.model.Movie;
@@ -8,6 +8,8 @@ import com.opencsv.exceptions.CsvException;
 
 
 import java.io.*;
+
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -62,6 +64,37 @@ public class CSVUtils {
             e.printStackTrace(); // Štampamo stek trag greške
             return false; // Ako dođe do greške, vraćamo false
         }
+    }
+
+    public static List<Movie> getTheNewestMovies(String csvFilePath) throws IOException {
+        List<Movie> movies = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+            String line;
+            List<String> lines = new ArrayList<>();
+
+            while ((line = br.readLine()) != null) {
+                lines.add(line);
+            }
+
+            // Ako fajl ima više od tri linije, uzmi poslednje tri
+            int startIndex = Math.max(0, lines.size() - 3);
+            for (int i = startIndex; i < lines.size(); i++) {
+                String[] data = lines.get(i).split(",");
+                if (data.length >= 6) {
+                    String imdbId = data[0].trim();
+                    String title = data[1].trim();
+                    String year = data[2].trim();
+                    String director = data[3].trim();
+                    String actors = data[4].trim();
+                    String plot = data[5].trim();
+
+                    movies.add(new Movie(imdbId, title, year, director, actors, plot));
+                }
+            }
+        }
+
+        return movies;
     }
 
 }

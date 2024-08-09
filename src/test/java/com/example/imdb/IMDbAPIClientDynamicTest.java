@@ -1,12 +1,11 @@
-package com.example.imdb.util;
+package com.example.imdb;
 
 import com.example.imdb.client.IMDbAPIClient;
 import com.example.imdb.exception.MovieNotFoundException;
 import com.example.imdb.model.Movie;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
-import org.junit.jupiter.api.function.Executable;
-import org.json.JSONObject;
+
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -58,17 +57,17 @@ public class IMDbAPIClientDynamicTest {
         // Invalid IMDb IDs for testing
         Collection<String> invalidIds = Arrays.asList(
                 "invalidId1",
-                "tt0000000",
+                "blablabla",
                 "blablabla"
         );
 
         return invalidIds.stream().map(id -> DynamicTest.dynamicTest(
                 "Testing invalid IMDb ID: " + id,
                 () -> {
-                    // Očekujemo da se desi IOException kada pokušamo da pročitajmo iz nepostojećeg fajla
+
                     assertThrows(MovieNotFoundException.class, () -> {
                         Movie data = client.fetchMovieData(id);
-
+                        System.out.println(data);
                     });
                 }
         ));
