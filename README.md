@@ -1,4 +1,4 @@
-# MoviBase Test ![Alt text](https://cdn.iconscout.com/icon/free/png-512/free-imdb-282766.png?f=webp&w=256)
+# MoviBase ![Alt text](https://cdn.iconscout.com/icon/free/png-512/free-imdb-282766.png?f=webp&w=256)
 
 ## Opis
 Demonstrativni primer dinamičkih, parametrizovanih i običnih testova za potrebe predmeta Testiranje softvera na Računarskom Fakultetu u Beogradu.
@@ -21,4 +21,4 @@ Ovaj projekat je usmeren na testiranje softvera koristeći JUnit 5 i rad sa CSV 
 
    Da biste klonirali ovaj repozitorijum, koristite sledeću komandu:
    ```bash
-   git clone https://github.com/korisnickoime/star-wars-vehicles-test.git
+   git clone https://github.com/zarko-ned/raf-moviebase.git
